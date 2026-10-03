@@ -1,0 +1,16 @@
+begin;
+create extension if not exists pgtap with schema extensions;
+select plan(11);
+select has_table('public','profiles','profiles table exists');
+select has_table('public','work_posts','work publishing table exists');
+select has_table('public','messages','messaging table exists');
+select ok((select relrowsecurity from pg_class where oid='public.profiles'::regclass),'profile RLS is enabled');
+select ok((select relrowsecurity from pg_class where oid='public.messages'::regclass),'message RLS is enabled');
+select ok((select relrowsecurity from pg_class where oid='public.organization_members'::regclass),'organization membership RLS is enabled');
+select ok(exists(select 1 from pg_policies where schemaname='public' and tablename='messages' and policyname='Messages membership read'),'messages require conversation membership');
+select ok(exists(select 1 from pg_policies where schemaname='public' and tablename='job_applications' and policyname='Applicants submit' and with_check like '%status = ''applied''%'),'job applications require applicant ownership and initial status');
+select ok(not has_table_privilege('authenticated','public.connections','INSERT'),'connection requests must use the guarded RPC');
+select ok((select prosecdef from pg_proc where oid='public.request_connection(uuid)'::regprocedure),'connection RPC runs with a fixed privilege boundary');
+select ok(exists(select 1 from pg_policies where schemaname='public' and tablename='credit_verifications' and policyname='Authorized organization verifies credit' and with_check like '%reviewer_id%'),'credit reviewer identity is bound to the signed-in user');
+select * from finish();
+rollback;

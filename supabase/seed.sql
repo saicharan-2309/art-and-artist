@@ -1,0 +1,3 @@
+insert into public.skills(name,category) values
+('Directing','Film'),('Screenwriting','Film'),('Cinematography','Film'),('Editing','Film'),('Sound design','Film'),('Production design','Film'),('Acting','Performance'),('Casting','Performance'),('Theatre direction','Performance'),('Photography','Photography'),('Portrait photography','Photography'),('Documentary photography','Photography'),('Composition','Music'),('Music production','Music'),('Lighting design','Design'),('Graphic design','Design'),('Costume design','Design'),('Writing','Writing'),('Editing and publishing','Writing'),('Visual effects','Post-production'),('Animation','Post-production'),('Producing','Production'),('Art direction','Production'),('Choreography','Performance')
+on conflict(name) do nothing;
