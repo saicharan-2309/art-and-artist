@@ -62,15 +62,11 @@ Never grant admin roles from client code. Keep all .env.local files out of Git.
 Create an empty GitHub repository named `art-and-artist`. From the project folder (the Git repository root):
 
 ```powershell
-git init
-git add .
-git commit -m "Build ART & ARTIST application"
-git branch -M main
 git remote add origin https://github.com/YOUR_USERNAME/art-and-artist.git
 git push -u origin main
 ```
 
-If this folder is already connected to a remote, inspect it with git remote -v first; use git remote set-url origin ... only when you intend to change it.
+The local repository is already initialized on `main` with the application committed. If this folder is already connected to a remote, inspect it with `git remote -v` first; use `git remote set-url origin ...` only when you intend to change it.
 
 ## Vercel and live test
 
